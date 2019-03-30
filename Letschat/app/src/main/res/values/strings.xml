@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Lets chat</string>
+    <string name="WebClientID">1061527783989-d0f0ccj32im0jbhk2d0199kf5tqfk46t.apps.googleusercontent.com</string>
+    <string name="editTextEmailAdresse">Email address</string>
+    <string name="login_with_email">Login with Email :</string>
+    <string name="or_sign_in_with">or sign in with :</string>
+    <string name="asterisks">********</string>
+    <string name="tape_your_pass">tape your password</string>
+    <string name="USER_EXTRA">USER_EXTRA</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+</resources>

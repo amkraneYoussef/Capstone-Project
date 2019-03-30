@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1061527783989",
+    "firebase_url": "https://chatapp-517eb.firebaseio.com",
+    "project_id": "chatapp-517eb",
+    "storage_bucket": "chatapp-517eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061527783989:android:cdf7e23ba1d814f7",
+        "android_client_info": {
+          "package_name": "chat.goulmima.com.letschat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1061527783989-ma21dkek330bc5eshda5ptjdskqsdqg5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "chat.goulmima.com.letschat",
+            "certificate_hash": "9109ec2bc6103ec3797061d7831045665022135d"
+          }
+        },
+        {
+          "client_id": "1061527783989-d0f0ccj32im0jbhk2d0199kf5tqfk46t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB98Sm01PvJKP2sO5g1bH-YDerJc1vdob0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1061527783989-d0f0ccj32im0jbhk2d0199kf5tqfk46t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
