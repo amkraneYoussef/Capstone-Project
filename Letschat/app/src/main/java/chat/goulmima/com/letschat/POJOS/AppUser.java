@@ -8,11 +8,16 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class AppUser implements Parcelable {
 
+    public static final String EXTRA_USERNAME = "EXTRA_USERNAME";
+
     private String AppUserID;
     private String AppUserName;
     private String PhotoUrl;
     private long lastOnline;
     private boolean connected;
+
+    private String FullName;
+    private String CurrentCity;
 
     public AppUser() {
     }
@@ -68,6 +73,8 @@ public class AppUser implements Parcelable {
         parcel.writeString(AppUserName);
         parcel.writeString(PhotoUrl);
         parcel.writeLong(lastOnline);
+        parcel.writeString(FullName);
+        parcel.writeString(CurrentCity);
     }
 
     protected AppUser(Parcel in) {
@@ -75,6 +82,8 @@ public class AppUser implements Parcelable {
         AppUserName = in.readString();
         PhotoUrl = in.readString();
         lastOnline = in.readLong();
+        FullName = in.readString();
+        CurrentCity = in.readString();
     }
 
     public static final Creator<AppUser> CREATOR = new Creator<AppUser>() {
@@ -88,4 +97,20 @@ public class AppUser implements Parcelable {
             return new AppUser[size];
         }
     };
+
+    public String getFullName() {
+        return FullName;
+    }
+
+    public void setFullName(String fullName) {
+        FullName = fullName;
+    }
+
+    public String getCurrentCity() {
+        return CurrentCity;
+    }
+
+    public void setCurrentCity(String currentCity) {
+        CurrentCity = currentCity;
+    }
 }

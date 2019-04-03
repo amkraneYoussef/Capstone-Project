@@ -23,8 +23,12 @@
           }
         },
         {
-          "client_id": "1061527783989-d0f0ccj32im0jbhk2d0199kf5tqfk46t.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "1061527783989-qfbjilaeff9si61p38euiidbg33iitul.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "chat.goulmima.com.letschat",
+            "certificate_hash": "9946acab002ed00b6f23848b3e7fd54fe7f8bd58"
+          }
         }
       ],
       "api_key": [
@@ -33,20 +37,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "1061527783989-d0f0ccj32im0jbhk2d0199kf5tqfk46t.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

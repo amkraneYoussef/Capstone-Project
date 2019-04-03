@@ -1,5 +1,6 @@
 package chat.goulmima.com.letschat.DataAdapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -28,10 +29,18 @@ public class OnlineUsersAdapter extends RecyclerView.Adapter<OnlineUsersAdapter.
     private static final String TAG = "OnlineUsersAdapter";
     public ArrayList<AppUser> appUsers;
     private Context context;
+    OnUserClickListener onUserClickListener;
 
     public OnlineUsersAdapter(Context pContext){
         context = pContext;
         appUsers=new ArrayList<>();
+
+        /*try {
+            onUserClickListener = (OnUserClickListener) context;
+        }catch(ClassCastException e)
+        {
+            throw new ClassCastException(context.toString() + "didn't implement OnStepClickListener.");
+        }*/
     }
 
 
@@ -55,9 +64,15 @@ public class OnlineUsersAdapter extends RecyclerView.Adapter<OnlineUsersAdapter.
         viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context,MessagingActivity.class);
-                intent.putExtra(context.getString(R.string.USER_EXTRA),appUsers.get(i));
-                context.startActivity(intent);
+                if(((Activity)context).findViewById(R.id.ll_tabletMode) == null)
+                {
+                    Intent intent = new Intent(context,MessagingActivity.class);
+                    intent.putExtra(context.getString(R.string.USER_EXTRA),appUsers.get(i));
+                    context.startActivity(intent);
+                }else
+                {
+                    onUserClickListener.onUserClick(appUsers.get(i));
+                }
             }
         });
     }
@@ -84,5 +99,9 @@ public class OnlineUsersAdapter extends RecyclerView.Adapter<OnlineUsersAdapter.
             tv_username = itemView.findViewById(R.id.tv_username);
             linearLayout = itemView.findViewById(R.id.ll_container);
         }
+    }
+    public interface OnUserClickListener
+    {
+        void onUserClick(AppUser appUser);
     }
 }

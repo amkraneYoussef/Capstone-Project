@@ -3,6 +3,7 @@ package chat.goulmima.com.letschat.DataAdapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
     @Override
     public int getItemViewType(int position) {
-        if(messagesList.get(position).getmSenderUserID() == senderID)
+        if(messagesList.get(position).getmSenderUserID().equals(senderID))
         {
             return VIEW_TYPE_SENT;
         }
@@ -60,9 +61,12 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder messageViewHolder, int i) {
-        if(messagesList.get(i).getmSenderUserID() != senderID)
+        if(! messagesList.get(i).getmSenderUserID().equals(senderID))
         {
-            Glide.with(context).load(receiverPhoto).into(messageViewHolder.ivProfile);
+            if(receiverPhoto != null && !receiverPhoto.isEmpty())
+                Glide.with(context).load(receiverPhoto).into(messageViewHolder.ivProfile);
+            else
+                messageViewHolder.ivProfile.setImageResource(R.drawable.profile);
         }
             messageViewHolder.messageText.setText(messagesList.get(i).getmText());
 
