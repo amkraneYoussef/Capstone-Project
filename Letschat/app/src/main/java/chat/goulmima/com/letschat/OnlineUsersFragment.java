@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import com.google.firebase.auth.FirebaseAuth;
 
 import chat.goulmima.com.letschat.DataAdapters.OnlineUsersAdapter;
-import chat.goulmima.com.letschat.myWidget.MessagesListWidget;
 import chat.goulmima.com.letschat.myWidget.WidgetUpdateService;
 
 

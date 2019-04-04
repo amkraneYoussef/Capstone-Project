@@ -96,12 +96,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent1);
         });
 
-        findViewById(R.id.tv_onlineUsers).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                WidgetUpdateService.startActionUpdateAppWidgets(getApplicationContext());
-            }
-        });
+        findViewById(R.id.tv_onlineUsers).setOnClickListener(view -> WidgetUpdateService.startActionUpdateAppWidgets(getApplicationContext()));
     }
 
     private void loadAd() {

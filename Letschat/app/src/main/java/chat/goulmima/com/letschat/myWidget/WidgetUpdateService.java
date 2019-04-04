@@ -6,13 +6,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.util.Log;
-import android.widget.RemoteViews;
 
 import chat.goulmima.com.letschat.R;
 
 public class WidgetUpdateService extends IntentService {
-    public static final String ACTION_UPDATE_APP_WIDGETS = "ACTION_UPDATE_APP_WIDGETS";
+    private static final String ACTION_UPDATE_APP_WIDGETS = "ACTION_UPDATE_APP_WIDGETS";
 
 
     public WidgetUpdateService(String name) {

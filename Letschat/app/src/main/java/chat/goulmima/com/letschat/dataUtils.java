@@ -13,7 +13,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import chat.goulmima.com.letschat.POJOS.AppUser;
-import chat.goulmima.com.letschat.myWidget.MessagesListWidget;
 import chat.goulmima.com.letschat.myWidget.WidgetUpdateService;
 
 public class dataUtils {
