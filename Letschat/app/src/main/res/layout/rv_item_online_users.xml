@@ -18,7 +18,7 @@
                 android:id="@+id/tv_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Amkrane Youssef"
+                tools:text="AMKRANE Youssef"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="10dp"/>
 

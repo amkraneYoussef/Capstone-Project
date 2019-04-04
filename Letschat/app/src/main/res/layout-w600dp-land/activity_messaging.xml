@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:id="@+id/ll_tabletMode"
-    tools:context=".MessagingActivity">
+    tools:context=".MessagingActivity"
+    tools:ignore="InconsistentLayout">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="300dp"

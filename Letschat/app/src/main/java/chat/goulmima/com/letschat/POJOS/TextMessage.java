@@ -1,5 +1,6 @@
 package chat.goulmima.com.letschat.POJOS;
 
+@SuppressWarnings({"SpellCheckingInspection", "unused"})
 public class TextMessage {
     private String mSenderUserID, mText,mMediaUrl;
 

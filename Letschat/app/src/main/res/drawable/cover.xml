@@ -1,15 +1,19 @@
-<vector android:alpha="0.94" android:autoMirrored="true"
+<vector xmlns:tools="http://schemas.android.com/tools"
+    android:alpha="0.94" android:autoMirrored="true"
     android:height="600dp" android:viewportHeight="680.31"
     android:viewportWidth="1295.43" android:width="900dp"
-    xmlns:aapt="http://schemas.android.com/aapt" xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:aapt="http://schemas.android.com/aapt" xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="VectorRaster">
     <path android:pathData="M0,1h1295.43v678.32h-1295.43z"
         android:strokeColor="#000" android:strokeWidth="1">
         <aapt:attr name="android:fillColor">
             <gradient android:centerX="647.72"
                 android:centerY="339.07178"
                 android:gradientRadius="553.31" android:type="radial">
-                <item android:color="#FFA682FF" android:offset="0"/>
-                <item android:color="#FF5887FF" android:offset="1"/>
+                <item android:color="#FFA682FF" android:offset="0"
+                    tools:targetApi="n" />
+                <item android:color="#FF5887FF" android:offset="1"
+                    tools:targetApi="n" />
             </gradient>
         </aapt:attr>
     </path>

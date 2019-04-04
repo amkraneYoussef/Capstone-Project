@@ -4,27 +4,25 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.google.android.gms.common.internal.Asserts;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Logger;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 import chat.goulmima.com.letschat.POJOS.AppUser;
 import chat.goulmima.com.letschat.myWidget.MessagesListWidget;
+import chat.goulmima.com.letschat.myWidget.WidgetUpdateService;
 
 public class dataUtils {
-    private static String TAG = "DataUtils";
-    static FirebaseDatabase database;
+    private static final String TAG = "DataUtils";
 
 
     public static void getUserByID(String id, ArrayList<AppUser> usersList,Context context)
     {
-        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         DatabaseReference user = database.getReference(getUserRefPathByID(id));
         user.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -35,9 +33,11 @@ public class dataUtils {
                     if(usr.getAppUserID().equals(id)) return;
                 }
                 AppUser returnedUser  = dataSnapshot.getValue(AppUser.class);
+                assert returnedUser != null;
                 returnedUser.setAppUserID(id);
                 usersList.add(returnedUser);
-                MessagesListWidget.sendRefreshBroadcast(context);
+                /*MessagesListWidget.sendRefreshBroadcast(context);*/
+                WidgetUpdateService.startActionUpdateAppWidgets(context.getApplicationContext());
             }
 
             @Override

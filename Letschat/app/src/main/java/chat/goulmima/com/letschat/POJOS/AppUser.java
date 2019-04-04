@@ -3,9 +3,7 @@ package chat.goulmima.com.letschat.POJOS;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.FirebaseDatabase;
-
+@SuppressWarnings("unused")
 public class AppUser implements Parcelable {
 
     public static final String EXTRA_USERNAME = "EXTRA_USERNAME";

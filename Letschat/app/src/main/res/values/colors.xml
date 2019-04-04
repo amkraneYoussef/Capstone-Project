@@ -6,6 +6,6 @@
     <color name="Messaging_separator_line">#e0e0e0</color>
     <color name="bgWidget">#64b5f6</color>
     <color name="widgetStroke">#000</color>
-    <color name="widgetTextcolor">#000</color>
+    <color name="widgetTextColor">#000</color>
     <color name="widgetItemBg">#ff7043</color>
 </resources>

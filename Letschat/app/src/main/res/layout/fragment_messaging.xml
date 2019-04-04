@@ -15,7 +15,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        // this is a separator line
         <View
             android:id="@+id/separator"
             android:layout_width="match_parent"
@@ -42,18 +41,19 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
-                android:hint="tape your message"
+                android:hint="@string/tape_your_message"
                 android:background="@android:color/transparent"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:maxLines="5"/>
+                android:maxLines="5"
+                tools:ignore="Autofill" />
 
             <Button
                 android:id="@+id/sendMsg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Send"
+                android:text="@string/send"
                 android:gravity="center"
                 android:layout_gravity="bottom"
                 android:background="?attr/selectableItemBackground"/>

@@ -1,3 +1,4 @@
+//noinspection GradleCompatible
 apply plugin: 'com.android.application'
 
 android {
@@ -38,11 +39,13 @@ android {
 dependencies {
     implementation 'com.google.android.gms:play-services-ads:17.2.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+    //noinspection GradleCompatible
     implementation 'com.android.support:support-v4:28.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.google.firebase:firebase-database:16.0.6'
+    //noinspection GradleDependency
     implementation 'com.google.firebase:firebase-auth:16.1.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.google.firebase:firebase-core:16.0.7'

@@ -1,7 +1,7 @@
 package chat.goulmima.com.letschat;
 
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,7 +20,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 
 import chat.goulmima.com.letschat.DataAdapters.MessagesAdapter;
 import chat.goulmima.com.letschat.POJOS.AppUser;
@@ -29,63 +28,52 @@ import chat.goulmima.com.letschat.POJOS.TextMessage;
 import static chat.goulmima.com.letschat.FireBaseDataUtils.getChatSessionID;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MessagingFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
+@SuppressWarnings("ALL")
 public class MessagingFragment extends Fragment {
     private AppUser remoteAppUser;
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference messagesReference;
     private ChildEventListener mSentMessagesChildEventListener;
-    private ArrayList<TextMessage> messagesArray=new ArrayList<>();
+    //private final ArrayList<TextMessage> messagesArray=new ArrayList<>();
     private MessagesAdapter messagesAdapter;
-    private RecyclerView recyclerView;
-    private String chatSessionId;
-    private String currentUserID;
     private DatabaseReference remoteUserReceivedMessagesRef;
     private DatabaseReference localUserReceivedMessagesRef;
     private int receivedMessagesCount=0;
-    EditText mMessageTextBox;
-    private static String EXTRA_TEXT = "EXTRATEXT";
+    private EditText mMessageTextBox;
+    private static final String EXTRA_TEXT = "EXTRATEXT";
 
     public MessagingFragment() {
     }
 
-    public static MessagingFragment newInstance(String param1, String param2) {
-        MessagingFragment fragment = new MessagingFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             Bundle bundle = getArguments();
-            remoteAppUser = (AppUser) bundle.getParcelable(getString(R.string.USER_EXTRA));
+            remoteAppUser =  bundle.getParcelable(getString(R.string.USER_EXTRA));
         }
     }
 
+    @SuppressLint("CutPasteId")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_messaging, container, false);
-        currentUserID = FirebaseAuth.getInstance().getUid();
+        String currentUserID = FirebaseAuth.getInstance().getUid();
         mMessageTextBox = view.findViewById(R.id.et_messageText);
         if(savedInstanceState != null && savedInstanceState.containsKey(EXTRA_TEXT))
         {
             mMessageTextBox.setText(savedInstanceState.getString(EXTRA_TEXT));
         }
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
         if (remoteAppUser != null)
         {
-            chatSessionId = getChatSessionID(currentUserID,remoteAppUser.getAppUserID());
+            String chatSessionId = getChatSessionID(currentUserID, remoteAppUser.getAppUserID());
             messagesReference = firebaseDatabase.getReference("private_" + chatSessionId);
             remoteUserReceivedMessagesRef = firebaseDatabase.getReference("ReceivedMsgs/" + remoteAppUser.getAppUserID() + "/" + currentUserID);
             localUserReceivedMessagesRef = firebaseDatabase.getReference("ReceivedMsgs/" + currentUserID);
@@ -95,18 +83,15 @@ public class MessagingFragment extends Fragment {
         }
 
 
-        final EditText mMessageText = view.findViewById(R.id.et_messageText);
+        @SuppressLint("CutPasteId") final EditText mMessageText = view.findViewById(R.id.et_messageText);
 
-        view.findViewById(R.id.sendMsg).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mMessageText.getText().toString().isEmpty()) return;
-                TextMessage textMessage = new TextMessage(FirebaseAuth.getInstance().getUid(), mMessageText.getText().toString(), "");
-                DatabaseReference messageId = messagesReference.push();
-                messageId.setValue(textMessage);
-                remoteUserReceivedMessagesRef.child(messageId.getKey()).setValue(true);
-                mMessageText.setText("");
-            }
+        view.findViewById(R.id.sendMsg).setOnClickListener(view1 -> {
+            if (mMessageText.getText().toString().isEmpty()) return;
+            TextMessage textMessage = new TextMessage(FirebaseAuth.getInstance().getUid(), mMessageText.getText().toString(), "");
+            DatabaseReference messageId = messagesReference.push();
+            messageId.setValue(textMessage);
+            remoteUserReceivedMessagesRef.child(messageId.getKey()).setValue(true);
+            mMessageText.setText("");
         });
 
         mSentMessagesChildEventListener = new ChildEventListener() {
@@ -115,6 +100,7 @@ public class MessagingFragment extends Fragment {
                 TextMessage newMessage = dataSnapshot.getValue(TextMessage.class);
                 messagesAdapter.messagesList.add((newMessage));
                 messagesAdapter.notifyDataSetChanged();
+                //noinspection ConstantConditions
                 localUserReceivedMessagesRef.child(remoteAppUser.getAppUserID()).child(dataSnapshot.getKey()).removeValue();
             }
 
@@ -139,8 +125,8 @@ public class MessagingFragment extends Fragment {
             }
         };
 
-        messagesAdapter = new MessagesAdapter(messagesArray,getContext(),currentUserID,remoteAppUser.getPhotoUrl());
-        recyclerView  = view.findViewById(R.id.rv_messages_list);
+        messagesAdapter = new MessagesAdapter(getContext(), currentUserID,remoteAppUser.getPhotoUrl());
+        RecyclerView recyclerView = view.findViewById(R.id.rv_messages_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(messagesAdapter);
 

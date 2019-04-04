@@ -4,11 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseError;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,7 +15,8 @@ import com.google.firebase.database.ValueEventListener;
 import chat.goulmima.com.letschat.DataAdapters.OnlineUsersAdapter;
 import chat.goulmima.com.letschat.POJOS.AppUser;
 
-public class FireBaseDataUtils {
+@SuppressWarnings({"ConstantConditions", "Convert2Lambda"})
+class FireBaseDataUtils {
 
     public static String getChatSessionID(String currentUserID,String remoteUserID)
     {
@@ -44,18 +40,15 @@ public class FireBaseDataUtils {
         final DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
         usersRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!(dataSnapshot.exists())){
                     Log.e("username","not existing creating");
-                    usersRef.child(userID).setValue(currentUser, new DatabaseReference.CompletionListener() {
-                        @Override
-                        public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-                            if (databaseError != null) {
-                                Log.e("firebaseUtils","Data could not be saved. " + databaseError.getMessage());
-                            } else {
-                                changeOnlineStatus(userID);
-                                Log.v("firebaseUtils","Data saved successfully.");
-                            }
+                    usersRef.child(userID).setValue(currentUser, (databaseError, databaseReference) -> {
+                        if (databaseError != null) {
+                            Log.e("firebaseUtils","Data could not be saved. " + databaseError.getMessage());
+                        } else {
+                            changeOnlineStatus(userID);
+                            Log.v("firebaseUtils","Data saved successfully.");
                         }
                     });
                 }else{
@@ -64,13 +57,13 @@ public class FireBaseDataUtils {
                 }
             }
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("DataUtils",databaseError.getDetails());
             }
         });
     }
 
-    public static void changeOnlineStatus(String userID)
+    private static void changeOnlineStatus(String userID)
     {
         // status check variables
         DatabaseReference myConnectionsRef;
@@ -89,7 +82,7 @@ public class FireBaseDataUtils {
 
         connectedRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 // when I disconnect, update the last time I was seen online
                 lastOnlineRef.onDisconnect().setValue(ServerValue.TIMESTAMP);
                 // when this device disconnects, remove it
@@ -109,6 +102,7 @@ public class FireBaseDataUtils {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 AppUser user = dataSnapshot.getValue(AppUser.class);
+                assert user != null;
                 user.setAppUserID(dataSnapshot.getKey());
                 if (user.getConnected() && user.getAppUserID() != null)
                 {

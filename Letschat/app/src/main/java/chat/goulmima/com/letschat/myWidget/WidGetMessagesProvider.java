@@ -22,9 +22,11 @@ import chat.goulmima.com.letschat.POJOS.AppUser;
 import chat.goulmima.com.letschat.R;
 import chat.goulmima.com.letschat.dataUtils;
 
-public class WidGetMessagesProvider implements RemoteViewsService.RemoteViewsFactory {
-    private Context mContext;
-    private ArrayList<AppUser> lastMessagesSenders;
+@SuppressWarnings("unused")
+class WidGetMessagesProvider implements RemoteViewsService.RemoteViewsFactory {
+    private static final String TAG = "WidGetMessagesProvider";
+    private final Context mContext;
+    private final ArrayList<AppUser> lastMessagesSenders;
 
     public WidGetMessagesProvider(Context context, Intent intent)
     {
@@ -34,13 +36,11 @@ public class WidGetMessagesProvider implements RemoteViewsService.RemoteViewsFac
 
     @Override
     public void onCreate() {
-        Log.e("widgetTest","widget created");
         loadLastMessages();
     }
 
     @Override
     public void onDataSetChanged() {
-        Log.e("widgetTest","widget datasetchanged");
         loadLastMessages();
     }
 
@@ -91,11 +91,11 @@ public class WidGetMessagesProvider implements RemoteViewsService.RemoteViewsFac
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null)
         {
-            Log.e("newMessage", "not logged");
+            Log.e(TAG, "not logged");
             return;
         }
 
-        DatabaseReference messagesRef = FirebaseDatabase.getInstance().getReference("ReceivedMsgs/" + user.getUid());
+        @SuppressWarnings("SpellCheckingInspection") DatabaseReference messagesRef = FirebaseDatabase.getInstance().getReference("ReceivedMsgs/" + user.getUid());
         messagesRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -108,7 +108,7 @@ public class WidGetMessagesProvider implements RemoteViewsService.RemoteViewsFac
             }
 
             private void addUser(@NonNull DataSnapshot dataSnapshot) {
-                // user is added to arraylist passed in the parameters
+                // user is added to ArrayList passed in the parameters
                dataUtils.getUserByID(dataSnapshot.getKey(), lastMessagesSenders,mContext);
             }
 
@@ -116,17 +116,18 @@ public class WidGetMessagesProvider implements RemoteViewsService.RemoteViewsFac
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                     String userID = dataSnapshot.getKey();
                     AppUser toBeRemoved=null;
-                    for (AppUser Myuser : lastMessagesSenders)
+                    for (AppUser tempUser : lastMessagesSenders)
                     {
-                        if( Myuser.getAppUserID().equals(userID))
+                        if( tempUser.getAppUserID().equals(userID))
                         {
-                            toBeRemoved = Myuser;
+                            toBeRemoved = tempUser;
                             break;
                         }
                     }
                     if(toBeRemoved == null) return;
                     lastMessagesSenders.remove(toBeRemoved);
-                    MessagesListWidget.sendRefreshBroadcast(mContext);
+                    /*MessagesListWidget.sendRefreshBroadcast(mContext);*/
+                WidgetUpdateService.startActionUpdateAppWidgets(mContext.getApplicationContext());
             }
 
             @Override

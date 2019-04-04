@@ -3,14 +3,13 @@ package chat.goulmima.com.letschat;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.transition.Explode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -18,26 +17,13 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
-import chat.goulmima.com.letschat.DataAdapters.OnlineUsersAdapter;
 import chat.goulmima.com.letschat.POJOS.AppUser;
 import chat.goulmima.com.letschat.login.LoginActivity;
-import chat.goulmima.com.letschat.myWidget.MessagesListWidget;
-
-import static chat.goulmima.com.letschat.FireBaseDataUtils.getOnlineUsers;
+import chat.goulmima.com.letschat.myWidget.WidgetUpdateService;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -45,10 +31,19 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private FirebaseDatabase firebaseDatabase;
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         firebaseDatabase = FirebaseDatabase.getInstance();
+
+        // inside your activity (if you did not enable transitions in your theme)
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(new Slide());
+        }
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -85,23 +80,20 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        // load test ad using admob
+        // load test ad using Admob
         loadAd();
 
-        findViewById(R.id.signOut).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                firebaseDatabase.goOffline();
-                mAuth.signOut();
-                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+        findViewById(R.id.signOut).setOnClickListener(view -> {
+            firebaseDatabase.goOffline();
+            mAuth.signOut();
+            Intent intent12 = new Intent(MainActivity.this,LoginActivity.class);
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    startActivity(intent,
-                            ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
-                }else
-                    startActivity(intent);
-                finish();
-            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                startActivity(intent12,
+                        ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
+            }else
+                startActivity(intent12);
+            finish();
         });
 
         try
@@ -116,12 +108,16 @@ public class MainActivity extends AppCompatActivity {
          Log.e(TAG,e.getMessage());
         }
 
-        findViewById(R.id.iv_profile).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.iv_profile).setOnClickListener(view -> {
+            Intent intent1 = new Intent(MainActivity.this,ProfileActivity.class);
+            intent1.putExtra(AppUser.EXTRA_USERNAME,currentUser.getUid());
+            startActivity(intent1);
+        });
+
+        findViewById(R.id.tv_onlineUsers).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(MainActivity.this,ProfileActivity.class);
-                intent1.putExtra(AppUser.EXTRA_USERNAME,currentUser.getUid());
-                startActivity(intent1);
+                WidgetUpdateService.startActionUpdateAppWidgets(getApplicationContext());
             }
         });
     }

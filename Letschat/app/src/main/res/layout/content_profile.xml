@@ -11,9 +11,10 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/main.appbar"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/appbarHeight"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        tools:targetApi="lollipop">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/main.collapsing"
@@ -26,6 +27,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
+                android:contentDescription="@string/shows_a_cover_of_the_app"
                 android:id="@+id/iv_bg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,11 +46,11 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_anchor="@id/main.appbar"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,13 +73,15 @@
                     android:text="@string/fullname"/>
 
                 <EditText
+                    android:hint="@string/tape_you_full_name"
                     android:id="@+id/et_fullname"
                     android:layout_width="0dp"
                     android:maxWidth="250dp"
                     android:layout_weight="70"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:layout_margin="@dimen/textviewMargin"/>
+                    android:layout_margin="@dimen/textviewMargin"
+                    android:importantForAutofill="no" />
             </LinearLayout>
 
             <LinearLayout
@@ -96,13 +100,15 @@
                     android:text="@string/username"/>
 
                 <EditText
+                    android:hint="@string/tape_user_name"
                     android:id="@+id/et_username"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:maxWidth="250dp"
                     android:layout_weight="70"
-                    android:layout_margin="@dimen/textviewMargin"/>
+                    android:layout_margin="@dimen/textviewMargin"
+                    android:importantForAutofill="no" />
 
             </LinearLayout>
 
@@ -121,13 +127,15 @@
                     android:text="@string/current_city"/>
 
                 <EditText
+                    android:hint="@string/tape_your_current_city"
                     android:id="@+id/et_city"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/textviewMargin"
                     android:layout_weight="70"
                     android:inputType="text"
-                    android:maxWidth="250dp" />
+                    android:maxWidth="250dp"
+                    android:importantForAutofill="no" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -143,7 +151,8 @@
         app:civ_border_width="2dp"
         app:layout_anchor="@id/main.appbar"
         app:layout_anchorGravity="bottom|start"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+        tools:targetApi="lollipop" />
 
 
 </android.support.design.widget.CoordinatorLayout>
