@@ -20,7 +20,7 @@
     <string name="login_failed_retry">Login failed! Please try again later</string>
     <string name="pease_enter_username">please enter username</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="fullname">Full name:</string>
     <string name="username">Username :</string>
     <string name="current_city">Current city :</string>
@@ -37,4 +37,7 @@
     <string name="send">Send</string>
     <string name="no_new_messages">no new messages</string>
     <string name="click_to_save_profile_data">click to save profile data</string>
+    <string name="username_empty">Username empty</string>
+    <string name="city_empty">City empty</string>
+    <string name="Updated">Updated</string>
 </resources>

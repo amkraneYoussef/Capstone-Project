@@ -106,12 +106,12 @@ public class ProfileActivity extends AppCompatActivity {
             City = et_city.getText().toString();
             if ( userName.isEmpty()) {
                 Snackbar.make(view, R.string.should_enter_username, Snackbar.LENGTH_LONG)
-                        .setAction("Username empty", null).show();
+                        .setAction(R.string.username_empty, null).show();
                 return;
             }
             if ( City.isEmpty()) {
                 Snackbar.make(view, R.string.should_enter_city, Snackbar.LENGTH_LONG)
-                        .setAction("City empty", null).show();
+                        .setAction(R.string.city_empty, null).show();
                 return;
             }
 
@@ -132,7 +132,7 @@ public class ProfileActivity extends AppCompatActivity {
                             } else {
                                 Log.v(TAG, "Data saved successfully.");
                                 Snackbar.make(view, R.string.profileUpdated, Snackbar.LENGTH_LONG)
-                                        .setAction("Updated", null).show();
+                                        .setAction(R.string.Updated, null).show();
                             }
                         });
                     }
