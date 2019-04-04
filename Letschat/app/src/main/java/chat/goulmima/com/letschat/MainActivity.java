@@ -1,15 +1,11 @@
 package chat.goulmima.com.letschat;
 
-import android.app.ActivityOptions;
+
 import android.content.Intent;
-import android.os.Build;
-import android.transition.Explode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.transition.Slide;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -36,15 +32,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         firebaseDatabase = FirebaseDatabase.getInstance();
-
-        // inside your activity (if you did not enable transitions in your theme)
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setExitTransition(new Slide());
-        }
-
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -87,12 +74,7 @@ public class MainActivity extends AppCompatActivity {
             firebaseDatabase.goOffline();
             mAuth.signOut();
             Intent intent12 = new Intent(MainActivity.this,LoginActivity.class);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                startActivity(intent12,
-                        ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
-            }else
-                startActivity(intent12);
+            startActivity(intent12);
             finish();
         });
 
